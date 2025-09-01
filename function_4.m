@@ -1,8 +1,12 @@
-function [fig2, fig3, fig4] = function_4(stor1, stor2, stor3, stor4)
+function [fig2, fig3, fig4, table_entries] = function_4(stor1, stor2, stor3, stor4)
 % this is the rewritten version of the repeat_sims_fig.m script. It's
 % purpose is to unpack the information from function_3 (the sig and sens
 % data for multiple realizations of the models) and visualize it in the
 % pre-discussed way.
+
+% Throughout we have changed the variance to standard deviation; however,
+% we have not changed the original variable names to highlight that the
+% standard deviation rather than variance is being computed.
 
 % THESE VALUES NEED TO MATCH WHATS IN FUNCTION_3
 ws_min = 5;
@@ -53,9 +57,9 @@ for m = 1:rows
             ylim([0, 105]);
         else
             % plot the tau information
-            errorbar(win_range, T1{k}(1,:), T1{k}(2,:), 'r', 'LineWidth', 2);
+            errorbar(win_range, T1{k}(1,:), (T1{k}(2,:)), 'r', 'LineWidth', 2);
             hold on
-            errorbar(win_range, T2{k}(1,:), T2{k}(2,:), 'b', 'LineWidth', 2);
+            errorbar(win_range, T2{k}(1,:), (T2{k}(2,:)), 'b', 'LineWidth', 2);
             hold off
             ylim([-1, 1]);
         end
@@ -117,7 +121,7 @@ for m = 1:rows
             ylim([0, 105]);
         else
             % plot the tau information
-            errorbar(win_range, T3{k}(1,:), T3{k}(2,:), 'k', 'LineWidth', 2);
+            errorbar(win_range, T3{k}(1,:), (T3{k}(2,:)), 'k', 'LineWidth', 2);
             ylim([-1, 1]);
         end
         xlim([win_range(1), win_range(end)]);
@@ -255,7 +259,7 @@ function [tau_results_per_EWS, p_results_per_EWS] = mean_and_var_and_sig_percent
             % variance of the taus
         
             tau_mean_vars(1, j) = mean(taus{i}(:,j));
-            tau_mean_vars(2, j) = var(taus{i}(:,j));
+            tau_mean_vars(2, j) = std(taus{i}(:,j));
 
             p_range_jth_res_ith_EWS = ps{i}(:,j);
             place_holder = p_range_jth_res_ith_EWS;
